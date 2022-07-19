@@ -3,7 +3,8 @@ const sass = require('gulp-sass')(require('sass'));
 
 var concat = require('gulp-concat');
 var minifyCSS = require('gulp-minify-css');
-
+//general versionado
+var version= require('./package.json');
 
   //npm install gulp --save --only=dev
 gulp.task('hello', async () => {
@@ -26,6 +27,14 @@ gulp.task("style_min", () => {
     .pipe(minifyCSS())
     .pipe(concat("style_main.min.css"))
     .pipe(gulp.dest("public/stylesheets"));
+});
+//general mismo archivo pero sin rempazarlo
+gulp.task('style_min_ver', function(){
+  return gulp.src('scss/**/*.scss')
+    .pipe(sass()) // Converts Sass to CSS with gulp-sass
+    .pipe(minifyCSS())
+    .pipe(concat('style_main_'+version.version+'.min.css'))
+    .pipe(gulp.dest('public/stylesheets'))
 });
 
 //gulp watch
